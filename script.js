@@ -1,60 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Navigation Toggle Logic
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileNav = document.getElementById('mobile-nav');
-    const HIDDEN_CLASS = 'hidden';
+// Mobile menu toggle
+const menuToggle = document.getElementById('menu-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+menuToggle.addEventListener('click', () => {
+  const open = mobileNav.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
 
-    // Function to toggle menu visibility
-    function toggleMenu() {
-        const isHidden = mobileNav.classList.contains(HIDDEN_CLASS);
+// Close mobile nav when a link is clicked
+document.querySelectorAll('#mobile-nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  });
+});
 
-        if (isHidden) {
-            mobileNav.classList.remove(HIDDEN_CLASS);
-            menuToggle.setAttribute('aria-expanded', 'true');
-        } else {
-            mobileNav.classList.add(HIDDEN_CLASS);
-            menuToggle.setAttribute('aria-expanded', 'false');
-        }
-    }
+// Set current year in footer
+document.getElementById('current-year').textContent = new Date().getFullYear();
 
-    // Event listener for the toggle button
-    menuToggle.addEventListener('click', toggleMenu);
+// Contact form: open mailto with form content (fallback simple behavior)
+const form = document.getElementById('contact-form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
 
-    // Close the menu when a link is clicked
-    mobileNav.addEventListener('click', function(event) {
-        if (event.target.tagName === 'A') {
-            // Check if the menu is open before closing
-            if (!mobileNav.classList.contains(HIDDEN_CLASS)) {
-                toggleMenu(); 
-            }
-        }
-    });
+  const subject = encodeURIComponent('Portfolio Contact from ' + name);
+  const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
 
-    // 2. Automatically Update Footer Year
-    const currentYear = new Date().getFullYear();
-    const yearElement = document.getElementById('current-year');
-    if (yearElement) {
-        yearElement.textContent = currentYear;
-    }
-
-    // 3. Simple Form Submission Interception (Client-Side only)
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // STOP form from reloading the page
-            
-            console.log('Form submission intercepted! Data ready to be sent.');
-            
-            // Provide simple user feedback (Vanilla JS DOM manipulation)
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            submitButton.textContent = 'Message Sent!';
-            submitButton.disabled = true;
-            
-            setTimeout(() => {
-                submitButton.textContent = 'Send Message';
-                submitButton.disabled = false;
-                contactForm.reset();
-            }, 3000);
-        });
-    }
+  // Open user's default mail client
+  window.location.href = `mailto:habeebullah1765@gmail.com?subject=${subject}&body=${body}`;
 });
