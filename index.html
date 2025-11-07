@@ -159,6 +159,30 @@
     const toggle = document.getElementById('nav-toggle');
     const links = document.getElementById('nav-links');
     toggle.addEventListener('click', () => links.classList.toggle('show'));
-  </script>
+    <script>
+  const skills = document.querySelectorAll('.skill');
+
+  function handleScroll() {
+    const triggerBottom = window.innerHeight * 0.8;
+
+    skills.forEach(skill => {
+      const bar = skill.querySelector('.progress');
+      const barTop = skill.getBoundingClientRect().top;
+      const targetWidth = bar.getAttribute('style').match(/width:\s*([\d.]+%)/)[1];
+
+      // Set CSS custom property
+      bar.style.setProperty('--target-width', targetWidth);
+
+      if (barTop < triggerBottom) {
+        skill.classList.add('visible');
+      } else {
+        skill.classList.remove('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('load', handleScroll);
+</script>
 </body>
 </html>
