@@ -116,3 +116,49 @@ span { color: #2563eb; }
   .nav__toggle { display: block; }
   .home__content { flex-direction: column; text-align: center; }
 }
+
+/* ===== SKILLS ===== */
+.skills__intro {
+  margin: 1rem auto 2.5rem;
+  color: #475569;
+  font-size: 1rem;
+  max-width: 600px;
+}
+
+.skills__list {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.skill span {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #2563eb;
+}
+
+.bar {
+  background: #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 8px;
+  transition: width 1s ease;
+}
+
+/* Small animation */
+.skill:hover .progress {
+  opacity: 0.9;
+  filter: brightness(1.1);
+}
+
+
+
